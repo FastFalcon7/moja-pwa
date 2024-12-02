@@ -1,14 +1,15 @@
 const CACHE_NAME = 'pwa-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/css/styles.css',
-  '/js/script.js',
-  '/manifest.json',
-  '/assets/icon-192x192.png',
-  '/assets/icon-512x512.png'
+  '/',                 // Hlavná stránka
+  '/index.html',       // HTML
+  '/css/styles.css',   // CSS
+  '/js/script.js',     // JavaScript
+  '/manifest.json',    // Manifest
+  '/assets/icon-192x192.png', // Ikona
+  '/assets/icon-512x512.png'  // Ikona
 ];
 
+// Inštalácia service workera
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -17,6 +18,22 @@ self.addEventListener('install', event => {
   );
 });
 
+// Aktivácia a čistenie starých cache
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cache => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache);
+          }
+        })
+      );
+    })
+  );
+});
+
+// Fetchovanie dát
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
