@@ -3,25 +3,25 @@
   "short_name": "moja-pwa",  
   "icons": [
     {
-      "src": "/assets/icon-192x192.png",
+      "src": "icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icon-192x192.png",
+      "src": "icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/assets/icon-512x512.png",
+      "src": "icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icon-512x512.png",
+      "src": "icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -29,21 +29,27 @@
   ],
   "screenshots": [
     {
-      "src": "/assets/screenshot-wide.png",
+      "src": "screenshot-wide.png",
       "sizes": "1920x1080",
       "type": "image/png",
       "form_factor": "wide"
     },
     {
-      "src": "/assets/screenshot-mobile.png",
+      "src": "screenshot-mobile.png",
       "sizes": "750x1334",
       "type": "image/png",
       "form_factor": "narrow"
     }
   ],
-  "start_url": "/",
+  "start_url": "/moja-pwa/",
+  "scope": "/moja-pwa/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
+  "description": "Moja prvá PWA aplikácia",
+  "dir": "ltr",
+  "lang": "sk",
+  "orientation": "any",
+  "categories": ["utilities"],
   "display_override": ["window-controls-overlay"]
 }
