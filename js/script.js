@@ -7,11 +7,28 @@ if ('serviceWorker' in navigator) {
 // Pridanie event listenera na tlačidlo "Ďakujem"
 const thankYouButton = document.getElementById('thankYouButton');
 thankYouButton.addEventListener('click', () => {
-  // Zachováme štruktúru centrovaného obsahu
+  // Úprava pre lepšie zobrazenie na mobiloch
   document.body.innerHTML = `
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-      <h1>... a teraz klikni na tlačidlo Restart pre restartovanie aplikacie.</h1>
-      <button id="restartButton">Restart</button>
+    <div style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      text-align: center;
+      box-sizing: border-box;
+    ">
+      <h1 style="margin-bottom: 20px; font-size: 24px;">... a teraz klikni na tlačidlo Restart pre restartovanie aplikacie.</h1>
+      <button id="restartButton" style="
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #0078d7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      ">Restart</button>
     </div>
   `;
   
