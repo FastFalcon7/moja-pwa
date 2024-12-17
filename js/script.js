@@ -1,13 +1,11 @@
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
+  navigator.serviceWorker.register('/moja-pwa/sw.js')  // Upravená cesta k SW
     .then(reg => console.log('Service Worker zaregistrovaný:', reg))
     .catch(err => console.error('Chyba pri registrácii SW:', err));
 }
 
-// Pridanie event listenera na tlačidlo "Ďakujem"
 const thankYouButton = document.getElementById('thankYouButton');
 thankYouButton.addEventListener('click', () => {
-  // Úprava pre lepšie zobrazenie na mobiloch
   document.body.innerHTML = `
     <div style="
       display: flex;
@@ -32,7 +30,6 @@ thankYouButton.addEventListener('click', () => {
     </div>
   `;
   
-  // Pridanie event listenera na tlačidlo "Restart"
   document.getElementById('restartButton').addEventListener('click', () => {
     window.location.reload();
   });

@@ -1,31 +1,34 @@
-const CACHE_NAME = 'pwa-cache-v1';
-const urlsToCache = [
-  '/',                 // Hlavná stránka
-  '/index.html',       // HTML
-  '/css/styles.css',   // CSS
-  '/js/script.js',     // JavaScript
-  '/manifest.json',    // Manifest
-  '/assets/icon-192x192.png', // Ikona
-  '/assets/icon-512x512.png'  // Ikona
+const CACHE_NAME = 'moja-pwa-v1';
+const CACHE_FILES = [
+  '/',
+  '/index.html',
+  '/moja-pwa/css/styles.css',
+  '/moja-pwa/js/script.js',
+  '/moja-pwa/manifest.json',
+  '/moja-pwa/assets/icon-152x152.png',
+  '/moja-pwa/assets/icon-167x167.png',
+  '/moja-pwa/assets/icon-180x180.png'
 ];
 
-// Inštalácia service workera
-self.addEventListener('install', event => {
+// Inštalácia Service Workera
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log('Cache otvorená');
+        return cache.addAll(CACHE_FILES);
+      })
   );
 });
 
-// Aktivácia a čistenie starých cache
-self.addEventListener('activate', event => {
+// Aktivácia Service Workera
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
+    caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
           }
         })
       );
@@ -33,11 +36,34 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetchovanie dát
-self.addEventListener('fetch', event => {
+// Zachytávanie požiadaviek
+self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request)
+      .then((response) => {
+        // Cache hit - vrátime response z cache
+        if (response) {
+          return response;
+        }
+
+        // Inak skúsime fetchnúť požiadavku zo siete
+        return fetch(event.request)
+          .then((response) => {
+            // Kontrola či máme validnú response
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Klonujeme response, pretože cache a browser ju potrebujú
+            const responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then((cache) => {
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
+          });
+      })
   );
 });
