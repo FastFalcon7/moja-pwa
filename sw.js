@@ -1,7 +1,7 @@
 const CACHE_NAME = 'moja-pwa-v1';
 const CACHE_FILES = [
-  '/',
-  '/index.html',
+  '/moja-pwa/',
+  '/moja-pwa/index.html',
   '/moja-pwa/css/styles.css',
   '/moja-pwa/js/script.js',
   '/moja-pwa/manifest.json',
